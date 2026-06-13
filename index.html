@@ -534,7 +534,7 @@ function ld(k){try{const s=localStorage.getItem('gv2_'+k);return s?JSON.parse(s)
 function sv(k,v){try{localStorage.setItem('gv2_'+k,JSON.stringify(v));}catch(e){}}
 
 const _today0 = new Date(); _today0.setHours(0,0,0,0);
-const ACTIVE_DATE = new Date(_today0); // locked on page load, survives midnight
+const ACTIVE_DATE = TODAY(); // locked on page load, uses 3am-aware TODAY()
 function parseLocalDate(s){const p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
 let startDate = ld('start') ? parseLocalDate(ld('start')) : _today0;
 
