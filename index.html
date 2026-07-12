@@ -242,6 +242,14 @@ body.light{
 .day-nav-btn:disabled{opacity:.25;cursor:default}
 .day-nav-label{flex:1;font-size:12px;color:var(--tx2);font-family:var(--fm);text-align:center}
 .past-banner{background:rgba(240,160,60,0.10);border:0.5px solid rgba(240,160,60,0.3);border-radius:var(--r);padding:7px 12px;font-size:11px;color:#f0a040;margin-bottom:10px;font-family:var(--fm);display:none}
+
+.mode-toggle{display:flex;gap:6px;margin-bottom:10px}
+.mode-btn{flex:1;padding:9px 6px;border-radius:var(--r);border:0.5px solid var(--bd2);
+  text-align:center;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;
+  color:var(--tx3);background:var(--bg3);font-family:var(--f);letter-spacing:.04em}
+.mode-btn.active-home{background:rgba(200,240,96,0.12);border-color:var(--g);color:var(--g)}
+.mode-btn.active-park{background:rgba(96,200,144,0.12);border-color:#60c890;color:#60c890}
+
 </style>
 </head>
 <body>
@@ -274,6 +282,10 @@ body.light{
     </div>
   </div>
 
+  <div class="mode-toggle">
+    <button class="mode-btn" id="mode-home" onclick="setMode('home')">🏠 Home</button>
+    <button class="mode-btn" id="mode-park" onclick="setMode('park')">🌳 Park</button>
+  </div>
   <div class="day-nav">
     <button class="day-nav-btn" id="nav-prev" onclick="changeViewDay(-1)">←</button>
     <div class="day-nav-label" id="nav-label"></div>
@@ -534,6 +546,35 @@ const STRETCHES = {
     ]
   }
 };
+
+// ── PARK SESSION ──
+const PARK_EXERCISES = {
+  pk1:{name:'Dip',muscles:['Lower Chest','Triceps'],secondary:['Front Delts'],
+    prog:[{s:4,r:6,u:'reps'},{s:4,r:8,u:'reps'},{s:4,r:10,u:'reps'},{s:5,r:10,u:'reps'}],
+    steps:['雙手撐平行棒，身體微微前傾（胸肌更多）','緩緩下降至上臂平行地面，唔要過低','爆發力推起，頂部唔鎖死手肘','身體保持穩定，唔要左右搖晃'],
+    mistake:'唔好完全鎖死手肘，保持微彎。前傾角度決定胸肌 vs 三頭肌參與比例。',type:'push'},
+  pk2:{name:'Inverted Row',muscles:['Upper Back','Rhomboids'],secondary:['Biceps','Rear Delts'],
+    prog:[{s:4,r:10,u:'reps'},{s:4,r:12,u:'reps'},{s:4,r:15,u:'reps'},{s:5,r:15,u:'reps'}],
+    steps:['找一條平行棒或低單槓，仰面躺下抓住','身體成一直線（腳跟著地），將胸口拉向棒','頂部擠壓背部1秒，感受肩胛骨收攏','緩緩下放，手臂幾乎完全伸直才再拉'],
+    mistake:'唔好讓臀部下沉！身體要全程保持一直線，腹部收緊。',type:'pull'},
+  pk3:{name:'Bulgarian Split Squat',muscles:['Quads','Glutes'],secondary:['Hamstrings','Balance'],
+    prog:[{s:4,r:8,u:'each'},{s:4,r:10,u:'each'},{s:4,r:12,u:'each'},{s:5,r:12,u:'each'}],
+    steps:['後腳放上長椅/台階，前腳向前踏大步','緩緩下蹲，後膝向地面，前腳膝蓋唔超出腳尖','前腳臀部發力站起','保持上身挺直，唔要過度前傾'],
+    mistake:'前腳步伐要夠大。太近會令膝蓋超出腳尖，壓力過大。對跑步嘅單腳力量最有效。',type:'core'},
+  pk4:{name:'Push Up',muscles:['Chest','Front Delts'],secondary:['Triceps','Core'],
+    prog:[{s:4,r:12,u:'reps'},{s:4,r:15,u:'reps'},{s:4,r:18,u:'reps'},{s:4,r:20,u:'reps'}],
+    steps:['手距比肩略寬，全腳趾撐地','3秒緩緩下降，胸口近地','爆發力推起，唔鎖死手肘','全程腰板挺直'],
+    mistake:'慢落快上。3:1節奏最有效，唔要快上快落變成彈弓。',type:'push'},
+  pk5:{name:'Dead Hang',muscles:['Grip','Shoulders'],secondary:['Spine','Lats'],
+    prog:[{s:3,sec:30,u:'sec'},{s:3,sec:40,u:'sec'},{s:3,sec:50,u:'sec'},{s:4,sec:60,u:'sec'}],
+    steps:['Overhand 正握，肩寬或略寬，拇指包住棒','讓肩膊完全放鬆上提，感受脊椎拉開','吊到20-25s後輕微向下壓肩胛，再放鬆，交替','保持正常呼吸，唔要閉氣'],
+    mistake:'唔好用False Grip（拇指唔包）做Dead Hang，容易脫手。要完全放鬆才有脊椎減壓效果。',type:'pull'},
+  pk6:{name:'Leg Raise',muscles:['Lower Abs','Hip Flexors'],secondary:['Core'],
+    prog:[{s:3,r:10,u:'reps'},{s:3,r:12,u:'reps'},{s:4,r:15,u:'reps'},{s:4,r:15,u:'reps'}],
+    steps:['懸掛於單槓，或仰臥地面','雙腿伸直，緩緩上升至垂直地面','控制地下放，唔要讓腳完全放下','全程下背貼地（仰臥版）'],
+    mistake:'唔好借用擺動慣性。全程控制，下腹持續收緊才有效。',type:'core'},
+};
+const PARK_WORKOUT={label:'Park',color:'#60c890',exercises:['pk1','pk2','pk3','pk4','pk5','pk6']};
 
 // ── WORKOUT PLAN ──
 const WORKOUTS = {
