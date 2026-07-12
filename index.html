@@ -697,6 +697,19 @@ function renderStretch(type){
 }
 
 
+
+function getSessionMode(dstr){
+  try{const m=JSON.parse(localStorage.getItem('gv2_mode_'+dstr)||'"home"');return m;}
+  catch(e){return 'home';}
+}
+function setMode(mode){
+  const dstr=ds(viewDate);
+  try{localStorage.setItem('gv2_mode_'+dstr,JSON.stringify(mode));}catch(e){}
+  // reset exDone/exSkipped when switching mode (different exercises)
+  if(sessions[dstr]){sessions[dstr].exDone=[];sessions[dstr].exSkipped=[];}
+  renderToday();
+}
+
 function changeViewDay(delta){
   const newD=new Date(viewDate);
   newD.setDate(newD.getDate()+delta);
@@ -766,7 +779,7 @@ function renderToday(){
         '</span>'+
       '</div>'+
       nxW.exercises.map((eid,i)=>{
-        const ex=EXERCISES[eid];
+        const ex=(allExData||EXERCISES)[eid];if(!ex)return;
         return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--bd)">'+
           '<span style="font-size:10px;color:var(--tx3);width:16px;font-family:var(--fm)">'+(i+1)+'</span>'+
           '<span style="font-size:13px;color:var(--tx2);flex:1">'+ex.name+'</span>'+
@@ -810,11 +823,17 @@ function renderToday(){
 
   // exercises
   const curType=sess.type||type;
-  const CW=WORKOUTS[curType];
-  renderStretch(curType);
+  const sessionMode=getSessionMode(dstr);
+  const CW=sessionMode==='park'?PARK_WORKOUT:WORKOUTS[curType];
+  const allExData=sessionMode==='park'?PARK_EXERCISES:EXERCISES;
+  renderStretch(sessionMode==='park'?null:curType);
+  // update mode toggle buttons
+  const mh=document.getElementById('mode-home'),mp=document.getElementById('mode-park');
+  if(mh){mh.className='mode-btn'+(sessionMode==='home'?' active-home':'');}
+  if(mp){mp.className='mode-btn'+(sessionMode==='park'?' active-park':'');}
   const list=document.getElementById('ex-list');list.innerHTML='';
   CW.exercises.forEach(eid=>{
-    const ex=EXERCISES[eid];
+    const ex=(allExData||EXERCISES)[eid];if(!ex)return;
     const isDone=(sess.exDone||[]).includes(eid);
     const isSkipped=(sess.exSkipped||[]).includes(eid);
     const hasTimer=ex.prog?ex.prog[0].sec!==undefined:!!ex.timer;
@@ -1060,7 +1079,7 @@ function renderPlan(){
   ['A','B','C'].forEach(t=>{
     const W=WORKOUTS[t];const container=document.getElementById('plan-'+t);container.innerHTML='';
     W.exercises.forEach(eid=>{
-      const ex=EXERCISES[eid];
+      const ex=(allExData||EXERCISES)[eid];if(!ex)return;
       const r=document.createElement('div');r.className='ppex';
       const curP=getPhase()-1;
       const pgRows=(ex.prog||[]).map((p,i)=>{
