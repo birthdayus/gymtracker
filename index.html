@@ -373,6 +373,25 @@ body::before{
   letter-spacing:.05em;text-shadow:1px 1px 0 rgba(0,0,0,0.5);
 }
 
+
+/* ── WARM UP / COOL DOWN ── */
+.wu-sec{background:rgba(232,160,32,0.06);border:.5px solid rgba(232,160,32,0.2);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.wu-sec summary{padding:10px 13px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;color:var(--gold);font-family:var(--fm)}
+.wu-sec summary::-webkit-details-marker{display:none}
+.wu-sec[open] summary{border-bottom:.5px solid rgba(232,160,32,0.15)}
+.wu-item{padding:7px 13px;font-size:12px;color:var(--tx2);border-bottom:.5px solid var(--bd);display:flex;align-items:center;gap:8px;font-family:var(--fm);line-height:1.4}
+.wu-item:last-child{border-bottom:none}
+.wu-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.cd-sec{background:rgba(96,160,240,0.06);border:.5px solid rgba(96,160,240,0.2);border-radius:var(--r);margin-top:10px;overflow:hidden}
+.cd-sec summary{padding:10px 13px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;color:#60a0f0;font-family:var(--fm)}
+.cd-sec summary::-webkit-details-marker{display:none}
+.cd-sec[open] summary{border-bottom:.5px solid rgba(96,160,240,0.15)}
+/* Spidey quip banner */
+.quip-banner{background:rgba(229,34,34,0.07);border:.5px solid rgba(229,34,34,0.18);border-radius:var(--r);padding:10px 13px;margin-bottom:10px;font-size:12px;color:var(--tx2);line-height:1.55;font-family:var(--fm);font-style:italic}
+.quip-banner::before{content:'🕷 ';font-style:normal}
+/* Finisher optional badge */
+.pyr-optional{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:rgba(232,160,32,0.15);color:var(--gold);border:.5px solid rgba(232,160,32,0.3);border-radius:10px;padding:2px 7px;margin-left:6px;vertical-align:middle;font-family:var(--fm)}
+
 </style>
 </head>
 <body>
@@ -393,7 +412,7 @@ body::before{
     <div class="card-web"></div>
     <!-- Spidey image: upload spidey.jpg to same folder as index.html -->
     <img id="spidey-img" src="./spidey.jpg" 
-      style="position:absolute;top:10px;right:12px;width:72px;height:72px;object-fit:cover;border-radius:50%;border:2px solid rgba(229,34,34,0.5);box-shadow:0 0 12px rgba(229,34,34,0.4),2px 2px 0 rgba(0,0,0,0.4);opacity:0" 
+      style="position:absolute;top:10px;right:12px;width:96px;height:96px;object-fit:cover;border-radius:50%;border:2.5px solid rgba(229,34,34,0.6);box-shadow:0 0 16px rgba(229,34,34,0.5),0 0 32px rgba(229,34,34,0.2),3px 3px 0 rgba(0,0,0,0.4);opacity:0" 
       onload="this.style.opacity=1" onerror="this.style.display='none'">
     <div class="htag">Workout Day</div>
     <div class="hday" id="h-day">—</div>
@@ -549,6 +568,65 @@ body::before{
 
 <script>
 // ══ DATA ══
+// ── SPIDEY QUIPS ──
+const SPIDEY_QUIPS = {
+  workout:[
+    "With great reps comes great responsibility. — Uncle Ben, gym edition",
+    "Just a kid from Queens… getting absolutely jacked.",
+    "Your Friendly Neighborhood Workout. Let's go. 🕷",
+    "Mr. Stark, I'm ready.",
+    "I can do this. I can do this. I CAN do this.",
+    "Failure is not an option. Neither is skipping Park day.",
+    "Ned's gonna freak when he sees these gains.",
+    "Happy would be proud. Probably just say 'again' tho.",
+  ],
+  restday:[
+    "Peter Parker Mode 🤓 — Recovery IS part of the plan.",
+    "Even Spider-Man needs rest days. Science fact.",
+    "Recharging web fluid. Back tomorrow. 🕸",
+    "今日係假期。連英雄都要休息。",
+    "Rest day: when the body rebuilds what the workout broke.",
+    "You can't swing if your arms are dead. Trust the process.",
+    "Not all heroes wear capes. Some just take rest days.",
+  ],
+  complete:[
+    "SPECTACULAR! — Spider-Man, definitely",
+    "With great effort comes great gains. Uncle Ben approves. 🕷",
+    "I'm something of a gym person myself.",
+    "That's what I call AMAZING SPIDER-WORKOUT.",
+    "Peter Parker has left the building. Spider-Man remains.",
+    "You did the thing! You did the thing!",
+    "If you're nothing without this workout, then you shouldn't have it. — Tony Stark, twisted",
+  ],
+  streak:[
+    "🔥 STREAK! Doing better than I did in Endgame.",
+    "Consistent as a spider web. And just as strong.",
+    "Nobody expects the spider to quit. Not even the spider.",
+  ],
+  lowstreak:[
+    "Hey, even I got snapped once. Come back stronger. 💪",
+    "One missed session doesn't define you. Get back on the web.",
+    "Peter Parker failed plenty of times. Then he got back up.",
+  ]
+};
+function getQuip(type){const a=SPIDEY_QUIPS[type]||SPIDEY_QUIPS.workout;return a[Math.floor(Math.random()*a.length)];}
+
+// ── WARM UP / COOL DOWN ──
+const WARMUP = {
+  A:{
+    pre:["🔄 Arm Circles 30s × 兩方向","💪 Wrist Circles 20s","🫁 Chest Opener — 雙手背後扣，挺胸 20s","🏹 Shoulder Pass-Through 10 reps","🔄 Neck Rolls 20s"],
+    post:["🚪 Doorway Chest Stretch 30s × 兩邊","✋ Cross-Body Shoulder 30s × 兩邊","💎 Tricep Overhead Stretch 30s × 兩邊","🧘 Child's Pose 45s"]
+  },
+  B:{
+    pre:["🐱 Cat-Cow 10 reps 慢速","💪 Lat Stretch 扶牆側傾 30s","🔄 Arm Swings 前後 15 reps","🔄 Neck Rolls 20s","✊ Scapular Circles 10 reps"],
+    post:["🪡 Thread the Needle 30s × 兩邊","💪 Lat Overhead Stretch 30s × 兩邊","🧘 Seated Forward Fold 45s","🔄 Chest Rotation 20s × 兩邊"]
+  },
+  C:{
+    pre:["🔄 Hip Circles 30s × 兩邊","🦵 Leg Swings 前後 15 × 兩邊","🫁 Lunge + 上身扭轉 8 × 兩邊","🏃 High Knees 30s","🦶 Ankle Circles 20s"],
+    post:["🧎 Hip Flexor Stretch 30s × 兩邊","🦵 Hamstring Stretch 30s × 兩邊","4️⃣ Figure-4 Glute 30s × 兩邊","🦶 Calf Stretch 30s × 兩邊","🕊 Pigeon Pose 45s × 兩邊"]
+  }
+};
+
 const PARK = {
   A:{label:'Park Push',col:'var(--red)',exs:[
     {id:'pa1',name:'Push Up',sets:4,reps:15,type:'reps',note:'闊手，3s下降爆發力上'},
@@ -733,6 +811,7 @@ function renderToday(){
     hnext.style.display='block';
 
     wc.innerHTML='<div class="rest-card">'+
+      '<div class="quip-banner" style="margin-bottom:12px">'+getQuip('restday')+'</div>'+
       '<div class="rest-icon">🕷️</div>'+
       '<div class="rest-title">Rest Day</div>'+
       '<div class="rest-sub">恢復中 · 明天更強</div>'+
@@ -772,7 +851,15 @@ function renderToday(){
   document.getElementById('s-today').textContent=pct+'%';
 
   // Build exercise list
-  let html='<div class="card"><div class="sh">今日動作</div>';
+  const wu=WARMUP[type]||WARMUP.A;
+  // Quip banner
+  const quipType=calcStreak()>=3?'streak':'workout';
+  let html='<div class="quip-banner">'+getQuip(quipType)+'</div>';
+  // Warm-up section
+  html+='<details class="wu-sec"><summary>🔥 Warm Up <span style="font-size:9px;opacity:.6;font-weight:400">(先做呢啲 5 min)</span></summary>'+
+    wu.pre.map(s=>'<div class="wu-item"><span class="wu-dot"></span>'+s+'</div>').join('')+
+  '</details>';
+  html+='<div class="card"><div class="sh">今日動作</div>';
   W.exs.forEach(ex=>{
     const ts=getTotalSets(ex);
     const done_sets=Math.min(sess.sets[ex.id]||0,ts);
@@ -800,11 +887,15 @@ function renderToday(){
   html+='<div class="pbar-wrap"><div class="pbar" style="width:'+pct+'%"></div></div>'+
     '<div class="pbar-label">'+doneSets+' / '+totalSets+' sets</div>';
   html+='</div>';
+  // Cool-down section
+  html+='<details class="cd-sec"><summary>🧊 Cool Down <span style="font-size:9px;opacity:.6;font-weight:400">(做完之後 5 min)</span></summary>'+
+    wu.post.map(s=>'<div class="wu-item" style="color:var(--tx2)"><span class="wu-dot" style="background:#60a0f0"></span>'+s+'</div>').join('')+
+  '</details>';
 
   // Holland Pyramid (park only)
   if(mode==='park'){
     const pyrDone=sess.pyrRounds||0;
-    html+='<div class="pyramid-sec"><div class="pyr-title">🕷 Holland Pyramid Finisher (1→5)</div>'+
+    html+='<div class="pyramid-sec"><div class="pyr-title">🕷 Holland Pyramid Finisher<span class="pyr-optional">選做 · 每週最多2次</span></div>'+
       '<div class="pyr-rounds">';
     for(let r=1;r<=5;r++){
       html+='<div class="pyr-round'+(r<=pyrDone?' done':r===pyrDone+1?' current':'')+'" data-round="'+r+'">'+r+'</div>';
@@ -959,7 +1050,8 @@ function webBurst(){
       });
     }
   }
-  const words2=['AMAZING!','INCREDIBLE!','SPECTACULAR!','THWIP!'];
+  const words2=['AMAZING!','INCREDIBLE!','SPECTACULAR!','SENSATIONAL!','THWIP!'];
+  const completeQuip=getQuip('complete');
   const w2=words2[Math.floor(Math.random()*words2.length)];
   wrap.innerHTML='<svg style="width:340px;height:340px;animation:webBurstAnim .9s ease-out forwards" viewBox="0 0 340 340">'+lines.join('')+'</svg>'+
     '<div style="position:fixed;top:50%;left:50%;font-size:42px;font-weight:900;color:#fff;letter-spacing:-.02em;text-shadow:3px 3px 0 #e52222,-1px -1px 0 #000,2px 2px 0 #000;animation:comicPow 1.1s cubic-bezier(.36,.07,.19,.97) forwards;transform:translate(-50%,-50%);font-family:Impact,Arial Black,sans-serif;-webkit-text-stroke:2px #000;pointer-events:none">'+w2+'</div>'+
