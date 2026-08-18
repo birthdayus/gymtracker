@@ -525,11 +525,11 @@ body::before{
     <div id="plan-PA"></div>
   </div>
   <div class="card">
-    <div class="sh">Park B — Pull Circuit <span style="color:#60a0f0;margin-left:4px">背·二頭·Pull-up訓練</span></div>
+    <div class="sh">Park B — Pull Circuit <span style="color:#60a0f0;margin-left:4px">Pull-up·背·旋轉</span></div>
     <div id="plan-PB"></div>
   </div>
   <div class="card">
-    <div class="sh">Park C — Legs + Core <span style="color:var(--gold);margin-left:4px">腿·腹·爆發力</span></div>
+    <div class="sh">Park C — Legs + Core <span style="color:var(--gold);margin-left:4px">腿·功能旋轉·爆發力</span></div>
     <div id="plan-PC"></div>
   </div>
   <div class="card">
@@ -537,6 +537,24 @@ body::before{
     <div class="tip"><strong>每次 Park session 做完加呢個。</strong> 1→5 rounds：<br>每 round: <span style="color:var(--red)">N×Inverted Row → 2N×Dip → 3N×Push-up → 4N×Sit-up → 5N×Squat</span></div>
     <div class="tip" style="border-left-color:var(--gold);margin-bottom:0"><strong>Home A：</strong>DB Floor Press, Shoulder Press, Lateral Raise, Diamond Push-up, Tricep Ext.<br><strong>Home B：</strong>DB Row, Bicep Curl, Hammer Curl, Rear Delt Fly, Shrug<br><strong>Home C：</strong>DB Squat, Romanian DL, Reverse Lunge, Calf Raise, Plank, Leg Raise</div>
   </div>
+
+  <!-- Weekly sport integration -->
+  <div class="card">
+    <div class="sh">🏀 籃球 + 🏊 游水/跑步 整合</div>
+    <div class="tip"><strong>每週運動總覽：</strong> 3日 Park/Home + 1日籃球(2h) + 1日游水或跑步(1h) = 5個活躍日，2個完全休息日。體能負荷理想。</div>
+    <div class="tip" style="border-left-color:#60a0f0"><strong>🏀 籃球日建議：</strong> 安排喺 Gym 休息日。打完籃球後腿部消耗大，盡量避免翌日做 Park C（腿日）。籃球係全身有氧，係你跑步姿勢同爆發力最好的額外訓練。</div>
+    <div class="tip" style="border-left-color:var(--gold)"><strong>🏊 游水/跑步日：</strong> 可以安排喺任何休息日，係最佳主動恢復。游水對肩關節健康極有益（拮抗 Dip/Push-up 嘅前推模式）。跑步後注意補充蛋白質。</div>
+    <div class="tip" style="margin-bottom:0;border-left-color:rgba(229,34,34,.5)"><strong>⚠️ 唔建議：</strong> 籃球 + Gym 同日做。游水/跑步可以係 Gym 同日早/晚做，但要隔至少4小時。</div>
+  </div>
+
+  <!-- Pull-up progression note -->
+  <div class="card">
+    <div class="sh">🎯 Pull-up 而家做到2下！</div>
+    <div class="tip"><strong>呢個係重大突破。</strong> 由完全做唔到到2下，代表你嘅背肌+二頭+核心已有足夠基礎。</div>
+    <div class="tip"><strong>新策略：</strong> Park B 第一個動作趁體力最好做真Pull-up，之後做Negatives鞏固力量。目標係：<br>Week 1-2: 1×2 + Negatives → Week 3-4: 1×3 → Month 2: 2×2 → Month 3: 3-5 clean reps</div>
+    <div class="tip" style="margin-bottom:0;border-left-color:var(--gold)"><strong>Negative Pull-up 做法：</strong> 跳上最高位（下巴過棒），用整整5秒極慢落下，感受背肌全程控制。每組3下已經係高質量訓練，唔要貪多。</div>
+  </div>
+
 </div>
 
 <!-- ══ REST TIMER OVERLAY ══ -->
@@ -629,32 +647,33 @@ const WARMUP = {
 
 const PARK = {
   A:{label:'Park Push',col:'var(--red)',exs:[
-    {id:'pa1',name:'Push Up',sets:4,reps:15,type:'reps',note:'闊手，3s下降爆發力上'},
-    {id:'pa2',name:'Dip',sets:4,reps:8,type:'reps',note:'身體微前傾，胸肌主導'},
-    {id:'pa3',name:'Pike Push-up',sets:3,reps:10,type:'reps',note:'臀部高舉，頭頂向地，鍊側三角肌'},
-    {id:'pa4',name:'Diamond Push-up',sets:3,reps:10,type:'reps',note:'手成菱形，三頭+內胸'},
-    {id:'pa5',name:'Dead Hang',sets:4,reps:20,type:'sec',note:'Overhand grip，肩膊完全放鬆'},
-    {id:'pa6',name:'Leg Raise',sets:3,reps:12,type:'reps',note:'懸掛版或仰臥版，下腹收緊'},
+    {id:'pa1',name:'Push Up',sets:4,reps:15,type:'reps',note:'闊手3s下降，爆發力上。每日加強胸肌基礎'},
+    {id:'pa2',name:'Dip',sets:4,reps:8,type:'reps',note:'身體微前傾胸肌主導，唔要完全鎖死手肘'},
+    {id:'pa3',name:'Pike Push-up',sets:3,reps:10,type:'reps',note:'臀部高舉，頭頂向地。肩膊前束+側三角肌'},
+    {id:'pa4',name:'Rotational Push-up',sets:3,reps:6,type:'reps',note:'做完一個Push-up，扭轉開側板（一手向天），兩邊交替。胸椎旋轉+胸肌'},
+    {id:'pa5',name:'Dead Hang',sets:3,reps:20,type:'sec',note:'Overhand grip，knuckle下方握住，肩膊完全放鬆'},
+    {id:'pa6',name:'Leg Raise',sets:3,reps:12,type:'reps',note:'下背貼地或懸掛版，全程下腹收緊'},
   ]},
   B:{label:'Park Pull',col:'#60a0f0',exs:[
-    {id:'pb1',name:'Inverted Row',sets:4,reps:12,type:'reps',note:'腳伸直（唔係屈膝），控制慢下放'},
-    {id:'pb2',name:'Scapular Pull',sets:3,reps:10,type:'reps',note:'吊住棒，只收肩胛骨（手肘唔彎），Pull-up第一步'},
-    {id:'pb3',name:'Dead Hang',sets:4,reps:25,type:'sec',note:'Overhand，累了就放，唔要force'},
-    {id:'pb4',name:'Inverted Row (Feet Elevated)',sets:3,reps:8,type:'reps',note:'腳放椅上，角度更接近Pull-up'},
-    {id:'pb5',name:'Bicycle Crunch',sets:3,reps:20,type:'reps',note:'慢速完全扭轉，側腹收緊'},
-    {id:'pb6',name:'Mountain Climber',sets:3,reps:20,type:'reps',note:'臀部水平，快速交替'},
+    {id:'pb1',name:'Pull-up (趁新鮮做)',sets:1,reps:2,type:'reps',note:'第一組！體力最好時做。做到力竭，即使只得2下都係進步'},
+    {id:'pb2',name:'Negative Pull-up (5s 慢落)',sets:3,reps:3,type:'reps',note:'跳上最高位，用5秒極慢落下。係建立Pull-up力量最有效方法'},
+    {id:'pb3',name:'Inverted Row',sets:3,reps:12,type:'reps',note:'腳伸直（唔係屈膝），控制慢下放3s'},
+    {id:'pb4',name:'Scapular Pull',sets:3,reps:10,type:'reps',note:'吊住單棒，只收肩胛骨下壓，手肘唔彎。Pull-up神經訓練'},
+    {id:'pb5',name:'Spider-Man Crawl',sets:3,reps:20,type:'sec',note:'四肢著地向前爬，膝蓋唔著地。肩胛穩定+胸椎旋轉+全身協調'},
+    {id:'pb6',name:'Bicycle Crunch',sets:3,reps:20,type:'reps',note:'慢速完全扭轉，感受側腹發力，唔係頸'},
   ]},
   C:{label:'Park Legs+Core',col:'var(--gold)',exs:[
-    {id:'pc1',name:'Bulgarian Split Squat',sets:4,reps:10,type:'reps',note:'後腳上椅，前腳夠遠，跑步爆發力'},
-    {id:'pc2',name:'Jump Squat',sets:3,reps:12,type:'reps',note:'落地時膝蓋微彎吸震，爆發力訓練'},
-    {id:'pc3',name:'Calf Raise',sets:3,reps:25,type:'reps',note:'踩台階邊緣，頂部停留1秒'},
-    {id:'pc4',name:'Dead Hang',sets:3,reps:30,type:'sec',note:'休息日的掛鈎，減壓脊椎'},
-    {id:'pc5',name:'Plank',sets:3,reps:45,type:'sec',note:'臀部收緊，唔好塌腰'},
-    {id:'pc6',name:'Hanging Leg Raise',sets:3,reps:10,type:'reps',note:'懸掛單棒，全程控制'},
+    {id:'pc1',name:'Bulgarian Split Squat',sets:4,reps:10,type:'reps',note:'後腳上椅/台，前腳夠遠，臀部下沉到後膝近地'},
+    {id:'pc2',name:'Lateral Lunge to Rotation',sets:3,reps:8,type:'reps',note:'側弓步落下同時雙手向弓步方向扭轉。髖活動+胸椎旋轉+腿力'},
+    {id:'pc3',name:'Jump Squat',sets:3,reps:10,type:'reps',note:'落地膝蓋微彎吸震，爆發力訓練。籃球彈跳力直接提升'},
+    {id:'pc4',name:'Calf Raise',sets:3,reps:25,type:'reps',note:'踩台階邊，頂部停1秒。跑步+籃球落地緩衝'},
+    {id:'pc5',name:'Dead Hang',sets:3,reps:25,type:'sec',note:'脊椎減壓，肩關節健康。每週3次做到就夠'},
+    {id:'pc6',name:'Plank',sets:3,reps:45,type:'sec',note:'臀部收緊，唔好讓腰塌下。核心穩定係籃球防守基礎'},
+    {id:'pc7',name:'Hanging Leg Raise',sets:3,reps:10,type:'reps',note:'懸掛單棒，雙腿伸直緩慢上升。下腹+髖屈肌'},
   ]}
 };
 
-const HOME = {
+const HOMEconst HOME = {
   A:{label:'Home Push',col:'var(--red)',exs:[
     {id:'ha1',name:'Push Up',sets:4,reps:20,type:'reps',note:'慢落快上，3:1節奏'},
     {id:'ha2',name:'DB Floor Press',sets:3,reps:12,type:'reps',note:'手肘45度，輕觸即推'},
